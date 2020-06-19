@@ -1,0 +1,489 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:conv="clr-namespace:YOYPlayer.Controls.Converters"
+                    xmlns:res="clr-namespace:YOYPlayer.Resources.Strings"
+                    xmlns:h="clr-namespace:YOYPlayer.Model.Helpers"
+                    xmlns:local="clr-namespace:YOYPlayer.Resources">
+    <!--#region General -->
+    <sys:Double x:Key="AppMinWidth">300</sys:Double>
+    <sys:Double x:Key="AppMinHeight">500</sys:Double>
+    <!--#endregion-->
+
+    <!--#region Converters -->
+
+    <conv:LowBrightnessConverter x:Key="cnvLowBrightness" />
+    <conv:NagativeConverter x:Key="cnvNegative" />
+    <conv:BoolToVisibilityConverter x:Key="cnvBoolToVisibility" />
+    <conv:NegativeBoolToVisibilityConverter x:Key="cnvNegBoolToVisibility" />
+    <conv:PassConverter x:Key="cnvPassword" />
+    <conv:FontReduceConverter x:Key="cnvReduceFont" />
+    <conv:UtcToLocalDateTimeConverter x:Key="cnvLocalTime" />
+
+    <!--#endregion-->
+
+    <!--#region Text Boxes-->
+
+    <Style x:Key="tbxRoundBorder" TargetType="TextBox">
+        <Setter Property="Background" Value="{StaticResource scb_Auth_TextBoxBackColor}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="MinHeight" Value="28" />
+        <Setter Property="Width" Value="220" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FontFamily" Value="/YOYPlayer;component/Resources/Fonts/#Montserrat" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border Name="Border"
+                            CornerRadius="10" Padding="2"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1" >
+                        <Grid>
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                            <Label Visibility="Hidden" x:Name="hint" Content="{TemplateBinding Tag}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Center" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                            <Setter TargetName="hint" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="hint" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                        <Trigger Property="IsMouseCaptured" Value="True">
+                            <Setter TargetName="hint" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{StaticResource scb_Auth_TextBoxDisabledBackColor}" />
+                            <Setter Property="Foreground" Value="{StaticResource scb_Auth_TextBoxDisabledForeColor}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="tbxPassword" TargetType="PasswordBox">
+        <Setter Property="Background" Value="{StaticResource scb_Auth_TextBoxBackColor}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="MinHeight" Value="28" />
+        <Setter Property="Width" Value="220" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FontFamily" Value="/YOYPlayer;component/Resources/Fonts/#Montserrat" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="PasswordBox">
+                    <Border Name="Border"
+                            CornerRadius="10" Padding="2"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1" >
+                        <Grid>
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                            <Label Visibility="Hidden" x:Name="hint" Content="{TemplateBinding Tag}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Center" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="h:PasswordHelper.Password" Value="{x:Static sys:String.Empty}">
+                            <Setter TargetName="hint" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="hint" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                        <Trigger Property="IsMouseCaptured" Value="True">
+                            <Setter TargetName="hint" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{StaticResource scb_Auth_TextBoxDisabledBackColor}" />
+                            <Setter Property="Foreground" Value="{StaticResource scb_Auth_TextBoxDisabledForeColor}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#region Buttons-->
+
+    <Style x:Key="btnBack" TargetType="Button">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Width" Value="35" />
+        <Setter Property="Height" Value="35" />
+        <Setter Property="Margin" Value="20" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Border Background="Transparent" />
+                        <Ellipse Stroke="{TemplateBinding Foreground}" StrokeThickness="2.5" x:Name="ellipse" />
+                        <Path Stroke="{TemplateBinding Foreground}" Data="M 10 10 M 0 0 M 6 2 L 3 5 L 6 8" Stretch="Fill" StrokeThickness="2.5" x:Name="gliph" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ellipse" Property="StrokeThickness" Value="3" />
+                            <Setter TargetName="gliph" Property="StrokeThickness" Value="3" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="btnFooter" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource scb_Auth_BackColor}" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontFamily" Value="/YOYPlayer;component/Resources/Fonts/#Montserrat Bold" />
+        <Setter Property="FontSize" Value="20" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Name="Border"
+                            CornerRadius="0 0 20 20" Padding="2"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1" >
+                        <ContentPresenter Margin="2"
+                                          Name="Content"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="FontSize" Value="21" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="FontSize" Value="20" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource scb_Auth_DisabledBackColor}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="btnRounded" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource scb_Status_BtnBackColor}" />
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="Width" Value="220" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+
+        <Setter Property="Foreground" Value="#333333" />
+        <Setter Property="FontFamily" Value="/YOYPlayer;component/Resources/Fonts/#Montserrat" />
+        <Setter Property="FontSize" Value="10" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Name="Border"
+                            CornerRadius="12" Padding="2"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="0" >
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <!--<VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.5" />
+                                    <VisualTransition GeneratedDuration="0" To="Pressed" />
+                                </VisualStateGroup.Transitions>-->
+
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background">
+                                            <ObjectAnimationUsingKeyFrames.KeyFrames>
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource scb_Status_BtnMouseOverColor}"/>
+                                            </ObjectAnimationUsingKeyFrames.KeyFrames>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background">
+                                            <ObjectAnimationUsingKeyFrames.KeyFrames>
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource scb_Status_BtnPressedColor}"/>
+                                            </ObjectAnimationUsingKeyFrames.KeyFrames>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <ContentPresenter Margin="2"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#region Text Blocks -->
+
+    <Style x:Key="tbLogsSongName" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#c92323" />
+        <Setter Property="FontFamily" Value="/YOYPlayer;component/Resources/Fonts/#Montserrat Medium" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+    <Style x:Key="tbLogsArtistName" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#333333" />
+        <Setter Property="FontFamily" Value="/YOYPlayer;component/Resources/Fonts/#Montserrat Bold" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Margin" Value="0 0 0 8" />
+    </Style>
+    <Style x:Key="tbLogsDateTime" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#666666" />
+        <Setter Property="FontFamily" Value="/YOYPlayer;component/Resources/Fonts/#Montserrat" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Margin" Value="0" />
+    </Style>
+    <Style x:Key="tbLogsDateHeader" TargetType="Run">
+        <Setter Property="Foreground" Value="#666666" />
+        <Setter Property="FontFamily" Value="/YOYPlayer;component/Resources/Fonts/#Montserrat Bold" />
+    </Style>
+
+    <Style x:Key="tbTrayToolTip" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#333333" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontFamily" Value="/YOYPlayer;component/Resources/Fonts/#Montserrat Bold" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="tbBig" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#333333" />
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="FontFamily" Value="/YOYPlayer;component/Resources/Fonts/#Montserrat Bold" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+    <Style x:Key="tbMiddle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontFamily" Value="/YOYPlayer;component/Resources/Fonts/#Montserrat Bold" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+    <Style x:Key="tbSmall" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontFamily" Value="/YOYPlayer;component/Resources/Fonts/#Montserrat" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+    <Style x:Key="tbLink" TargetType="TextBlock">
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+    <Style x:Key="hplink" TargetType="Hyperlink">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontFamily" Value="/YOYPlayer;component/Resources/Fonts/#Montserrat Medium" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextDecorations" Value="Underline" />
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#region Combo Boxes-->
+
+    <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="38" />
+            </Grid.ColumnDefinitions>
+            <Border x:Name="Border" 
+                    Background="{TemplateBinding Background}"
+                    Grid.ColumnSpan="2"
+                    CornerRadius="15"
+                    BorderThickness="1" />
+            <Border Grid.Column="0"
+                    CornerRadius="2,0,0,2" 
+                    Margin="1"
+                    BorderThickness="0,0,1,0" />
+            <Path x:Name="Arrow"
+                  Grid.Column="1"     
+                  Fill="{StaticResource scb_Files_ComboBoxGliphColor}"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Data="M 0 0 L 5 8 L 10 0 Z"/>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="ComboBoxTextBox" TargetType="TextBox">
+        <Border x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}" />
+    </ControlTemplate>
+
+    <Style x:Key="cbxFileSelection" TargetType="ComboBox">
+        <Setter Property="Background" Value="{StaticResource scb_Auth_TextBoxBackColor}" />
+        <Setter Property="Foreground" Value="#333333" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+
+        <Setter Property="FontFamily" Value="/YOYPlayer;component/Resources/Fonts/#Montserrat" />
+
+        <Setter Property="SnapsToDevicePixels" Value="true"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+
+        <Setter Property="Width" Value="220" />
+        <Setter Property="MinWidth" Value="120"/>
+        <Setter Property="MinHeight" Value="34"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBox">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                        </Grid.ColumnDefinitions>
+                        <ToggleButton Name="ToggleButton" 
+                                      Grid.ColumnSpan="3"
+                                      Background="{TemplateBinding Background}"
+                                      BorderBrush="{StaticResource scb_Files_ComboBoxGliphColor}"
+                                      Template="{StaticResource ComboBoxToggleButton}" 
+                                      Focusable="false"
+                                      IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                                      ClickMode="Press">
+                        </ToggleButton>
+                        <ContentPresenter Name="ContentSite" 
+                                          Grid.Column="1"
+                                          Content="{TemplateBinding SelectionBoxItem}"
+                                          ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                          ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                          IsHitTestVisible="False"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center" />
+                        <Label Grid.Column="1" Visibility="Hidden" x:Name="hint" Content="{TemplateBinding Tag}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False" />
+                        <Popup Name="PART_Popup"
+                               Grid.Column="1"
+                               Placement="Bottom"
+                               IsOpen="{TemplateBinding IsDropDownOpen}"
+                               AllowsTransparency="True" 
+                               Focusable="False"
+                               PopupAnimation="Slide">
+                            <Grid Name="DropDown"
+                                  SnapsToDevicePixels="True"   
+                                  MinWidth="{TemplateBinding FrameworkElement.ActualWidth}"
+                                  MinHeight="50"
+                                  MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                <Border x:Name="DropDownBorder"
+                                        Background="{TemplateBinding Background}"
+                                        BorderThickness="1"
+                                        BorderBrush="{TemplateBinding BorderBrush}"/>
+                                <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                </ScrollViewer>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="SelectedItem" Value="{x:Null}">
+                            <Setter TargetName="hint" Property="Visibility" Value="Visible" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{StaticResource scb_Auth_TextBoxDisabledBackColor}" />
+                            <Setter Property="Foreground" Value="{StaticResource scb_Auth_TextBoxDisabledForeColor}" />
+                            <Setter TargetName="ToggleButton" Property="BorderBrush" Value="{StaticResource scb_Auth_TextBoxDisabledForeColor}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#region Lists -->
+
+    <Style x:Key="LogItem" TargetType="ListViewItem">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Focusable" Value="false" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                    <ContentPresenter />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <DataTemplate x:Key="LogsListItemTemplate">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackPanel Margin="40 20 40 20">
+                <TextBlock Text="{Binding Username}" Style="{StaticResource tbLogsSongName}" />
+                <TextBlock Style="{StaticResource tbLogsArtistName}" >
+                    <Run Text="{Binding CommerceName}" />
+                    <LineBreak />
+                    <Run Text="{Binding BranchName}" />
+                    <Run Text="-" />
+                    <Run Text="{Binding DepartmentName}" />
+                </TextBlock>
+
+                <TextBlock Style="{StaticResource tbLogsDateTime}">
+                <Run Style="{StaticResource tbLogsDateHeader}" Text="{x:Static res:Strings.Logs_tblHourTitle_Text}" /> <Run Text="{Binding EventDate, StringFormat=HH:mm tt, Converter={StaticResource cnvLocalTime}}"></Run>
+                </TextBlock>
+
+                <TextBlock Style="{StaticResource tbLogsDateTime}">
+                <Run Style="{StaticResource tbLogsDateHeader}" Text="{x:Static res:Strings.Logs_tblDateTitle_Text}" /> <Run Text="{Binding EventDate, StringFormat=dd-MM-yyyy, Converter={StaticResource cnvLocalTime}}"></Run>
+                </TextBlock>
+            </StackPanel>
+            <Rectangle Grid.Row="1" Height="2" Margin="20 0 20 0" HorizontalAlignment="Stretch">
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="/YOYPlayer;component/Resources/Images/bg-line.png" />
+                </Rectangle.Fill>
+            </Rectangle>
+        </Grid>
+    </DataTemplate>
+
+    <Style x:Key="LogsListView" TargetType="ListView">
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
+        <Setter Property="SelectionMode" Value="Extended" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+
+    <!--#endregion-->
+
+</ResourceDictionary>

@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="YOYPlayer.Views.StatusView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:res="clr-namespace:YOYPlayer.Resources.Strings"
+             xmlns:model="clr-namespace:YOYPlayer.Model"
+             xmlns:properties="clr-namespace:YOYPlayer.Properties"
+             mc:Ignorable="d" 
+             Height="{StaticResource AppMinHeight}" Width="{StaticResource AppMinWidth}"
+             d:DesignHeight="500" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Rectangle MouseDown="DragWindow" Grid.RowSpan="5" RadiusX="20" RadiusY="20">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="/YOYPlayer;component/Resources/Images/bg.jpg" />
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Grid Margin="40">
+            <Image Width="150" Source="/YOYPlayer;component/Resources/Images/wave01.png" Opacity="1" IsHitTestVisible="False" />
+            <Image Width="133" Source="/YOYPlayer;component/Resources/Images/wave02.png" Opacity="1" IsHitTestVisible="False" />
+            <Image Width="111" Source="/YOYPlayer;component/Resources/Images/wave03.png" Opacity="1" IsHitTestVisible="False" />
+
+            <Image Width="55" Source="/YOYPlayer;component/Resources/Images/img-logo.png" IsHitTestVisible="False" />
+        </Grid>
+
+        <TextBlock Grid.Row="1" Style="{StaticResource tbBig}" Foreground="White" IsHitTestVisible="False" 
+                   Visibility="{Binding Source={x:Static model:Player.Instance}, Path=IsActive, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource cnvBoolToVisibility}}">
+            <Run>App Status:</Run>
+            <Run Foreground="#45ee45" Text="{x:Static res:Strings.Status_lblActive_Text}" />
+        </TextBlock>
+
+        <TextBlock Grid.Row="1" Style="{StaticResource tbBig}" Foreground="White" IsHitTestVisible="False"
+                   Visibility="{Binding Source={x:Static model:Player.Instance}, Path=IsActive, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource cnvNegBoolToVisibility}}" >
+            <Run>App Status:</Run>
+            <Run Foreground="Black" Text="{x:Static res:Strings.Status_lblNoActive_Text}" />
+        </TextBlock>
+
+        <TextBlock Grid.Row="2" Style="{StaticResource tbSmall}" Foreground="White" IsHitTestVisible="False"
+                   Name="tbtblCommerce">
+            <Run FontWeight="Black" Text="{Binding Source={x:Static properties:Settings.Default}, Path=AudioInfo.CommerceName}" />
+            <LineBreak />
+            <Run Text="{Binding Source={x:Static properties:Settings.Default}, Path=AudioInfo.BranchName}" />
+            <LineBreak />
+            <Run Text="{Binding Source={x:Static properties:Settings.Default}, Path=AudioInfo.DepartmentName}" 
+                 FontSize="{Binding ElementName=tblCommerce, Path=FontSize, Converter={StaticResource cnvReduceFont}}"/>
+        </TextBlock>
+
+        <Grid Grid.Row="3" Margin="0 20">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Button Style="{StaticResource btnRounded}" Content="{x:Static res:Strings.Status_btnFile_Content}" Command="{Binding OpenFilesCommand}" />
+            <Button Grid.Row="1" Style="{StaticResource btnRounded}" Content="{x:Static res:Strings.Status_btnExit_Content}" Command="{Binding OpenAuthCommand}" />
+            <Button Grid.Row="2" Style="{StaticResource btnRounded}" Content="{x:Static res:Strings.Status_btnLogs_Content}" Command="{Binding OpenLogsCommand}" />
+        </Grid>
+    </Grid>
+</UserControl>

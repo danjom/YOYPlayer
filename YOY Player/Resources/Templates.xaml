@@ -1,0 +1,61 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:v="clr-namespace:YOYPlayer.Views"
+                    xmlns:vm="clr-namespace:YOYPlayer.ViewModels"
+                    xmlns:model="clr-namespace:YOYPlayer.Model"
+                    xmlns:res="clr-namespace:YOYPlayer.Resources.Strings"
+                    xmlns:local="clr-namespace:YOYPlayer.Resources"
+                    xmlns:tb="http://www.hardcodet.net/taskbar">
+
+    <tb:TaskbarIcon x:Key="appNotifyIcon"
+                    ToolTipText=""
+                    IconSource="Images/img-logo.ico"
+                    PopupActivation="LeftClick"
+                    LeftClickCommand="{Binding ShowStatusCommand}">
+        <tb:TaskbarIcon.TrayToolTip>
+            <Border Background="{StaticResource scb_Auth_BackColor}" CornerRadius="5">
+                <Grid>
+
+                    <TextBlock Grid.Row="1" Style="{StaticResource tbTrayToolTip}" Foreground="White" IsHitTestVisible="False" 
+                               Visibility="{Binding Source={x:Static model:Player.Instance}, Path=IsActive, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource cnvBoolToVisibility}}">
+                        <Run>YOY Player:</Run>
+                        <Run Foreground="#45ee45" Text="{x:Static res:Strings.Status_lblActive_Text}" />
+                    </TextBlock>
+
+                    <TextBlock Grid.Row="1" Style="{StaticResource tbTrayToolTip}" Foreground="White" IsHitTestVisible="False"
+                               Visibility="{Binding Source={x:Static model:Player.Instance}, Path=IsActive, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource cnvNegBoolToVisibility}}" >
+                        <Run>YOY Player:</Run>
+                        <Run Foreground="#45ee45" Text="{x:Static res:Strings.Status_lblNoActive_Text}" />
+                    </TextBlock>
+                </Grid>
+            </Border>
+        </tb:TaskbarIcon.TrayToolTip>
+        <tb:TaskbarIcon.DataContext>
+            <vm:ToolTipViewModel />
+        </tb:TaskbarIcon.DataContext>
+    </tb:TaskbarIcon>
+
+    <DataTemplate DataType="{x:Type vm:AuthViewModel}">
+        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="20" ClipToBounds="True">
+            <v:AuthView />
+        </Border>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:FilesViewModel}">
+        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="20" ClipToBounds="True">
+            <v:FilesView />
+        </Border>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:StatusViewModel}">
+        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="20" ClipToBounds="True">
+            <v:StatusView />
+        </Border>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:LogsViewModel}">
+        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="20" ClipToBounds="True">
+            <v:LogsView />
+        </Border>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:ToolTipViewModel}">
+        <v:ToolTipView />
+    </DataTemplate>
+</ResourceDictionary>

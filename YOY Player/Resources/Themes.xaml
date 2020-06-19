@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:YOYPlayer.Resources">
+    <SolidColorBrush x:Key="scb_Auth_BackColor" Color="#c92323" />
+    <SolidColorBrush x:Key="scb_Auth_DisabledBackColor" Color="#dd3737" />
+    <SolidColorBrush x:Key="scb_Auth_TextBoxBackColor" Color="#eaeaea" />
+    <SolidColorBrush x:Key="scb_Auth_TextBoxDisabledForeColor" Color="#f2f2f2" />
+    <SolidColorBrush x:Key="scb_Auth_TextBoxDisabledBackColor" Color="#bfbfbf" />
+
+    <SolidColorBrush x:Key="scb_Auth_SessionForeColor" Color="#333333" />
+
+
+    <SolidColorBrush x:Key="scb_Files_ComboBoxGliphColor" Color="#8c8c8c" />
+    <SolidColorBrush x:Key="scb_Logs_HeaderColor" Color="#f6f6f6" />
+
+    <SolidColorBrush x:Key="scb_Status_BtnBackColor" Color="#eaeaea" />
+    <SolidColorBrush x:Key="scb_Status_BtnMouseOverColor" Color="#d9d9d9" />
+    <SolidColorBrush x:Key="scb_Status_BtnPressedColor" Color="#bfbfbf" />
+
+    <SolidColorBrush x:Key="scb_Status_BackColor" Color="#c21f22" />
+</ResourceDictionary> 
